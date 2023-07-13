@@ -18,5 +18,4 @@ public class PersoneDAO {
 		em.persist(p);
 		t.commit();
 	}
-
 }

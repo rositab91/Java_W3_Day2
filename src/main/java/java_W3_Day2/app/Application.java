@@ -36,25 +36,42 @@ public class Application {
 		PartecipazioniDAO pDao = new PartecipazioniDAO(em);
 		
 		Location hotel = new Location("Hilton", "Paris");
+		Location casa = new Location("Casa Nadia", "Lamezia");
+
 		ld.save(hotel);
+		ld.save(casa);
 		
 				Persona alpha = new Persona("Rosita", "Bongiovanni", "rositab91@live.it", LocalDate.of(1991, 3, 26), Sesso.FEMMINA, new HashSet<>());
+				Persona beta = new Persona("Giada", "Bongiovanni", "jadin@live.it", LocalDate.of(1993, 5, 5),
+						Sesso.FEMMINA, new HashSet<>());
+				Persona gamma = new Persona("Giuseppe", "Rumoro", "giuseppe.rumoro@gmail.com",
+						LocalDate.of(1990, 2, 8), Sesso.MASCHIO, new HashSet<>());
+				
 				pd.save(alpha);
+				pd.save(beta);
+				pd.save(gamma);
 
-				Evento moda = new Evento("Fashion Week", LocalDate.of(2023, 2, 05), "Moda", TipoEvento.PRIVATO, 500,
+				Evento moda = new Evento("Fashion Week", LocalDate.of(2023, 2, 05), "Moda", TipoEvento.PUBBLICO, 500,
 						hotel, new HashSet<>());
 				ed.save(moda);
-				logger.info(moda.getTitolo() + " e' stato salvato");
+				logger.info(moda.getTitolo() + " è stato salvato");
 		
+				Evento laurea = new Evento("Festa Giada", LocalDate.of(2023, 7, 30), "Laurea", TipoEvento.PRIVATO, 20,
+						casa, new HashSet<>());
+				ed.save(laurea);
+				logger.info(laurea.getTitolo() + " è stato salvato");
+
 				Set<Partecipazione> partecipazioni = new HashSet<>();
 		
-				Partecipazione partecipazioneAlfa = new Partecipazione(alpha, moda, Stato.CONFERMATO);
-		
+				Partecipazione partecipazioneA = new Partecipazione(alpha, moda, Stato.DA_CONFERMARE);
+				Partecipazione partecipazioneB = new Partecipazione(gamma, laurea, Stato.CONFERMATO);
 
-		partecipazioni.add(partecipazioneAlfa);
+				partecipazioni.add(partecipazioneA);
+				partecipazioni.add(partecipazioneB);
 
 
-		pDao.save(partecipazioneAlfa);
+				pDao.save(partecipazioneA);
+				pDao.save(partecipazioneB);
 
 
 		// Le entity manager e factory vanno sempre chiuse
